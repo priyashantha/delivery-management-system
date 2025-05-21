@@ -23,6 +23,8 @@ class DeliveryRequestFormRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'status' => 'required|in:pending,cancelled',
+
             'pickup_address' => 'required|string|max:255',
             'pickup_name' => 'required|string|max:255',
             'pickup_contact_no' => 'required|string|max:20',
