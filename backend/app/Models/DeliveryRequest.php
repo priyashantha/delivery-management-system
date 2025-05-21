@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 
 class DeliveryRequest extends Model
 {
@@ -28,4 +29,15 @@ class DeliveryRequest extends Model
         'width',
         'height',
     ];
+
+    protected static function booted()
+    {
+        static::creating(function ($request) {
+            do {
+                $ref = strtoupper(Str::random(8)); // or use Str::uuid()
+            } while (self::where('ref_id', $ref)->exists());
+
+            $request->ref_id = $ref;
+        });
+    }
 }

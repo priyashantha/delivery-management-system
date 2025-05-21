@@ -23,7 +23,7 @@ class DeliveryRequestFormRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'status' => 'required|in:pending,cancelled',
+            'status' => 'in:pending,cancelled',
 
             'pickup_address' => 'required|string|max:255',
             'pickup_name' => 'required|string|max:255',
@@ -38,7 +38,7 @@ class DeliveryRequestFormRequest extends FormRequest
 
             'type_of_good' => 'required|in:Document,Parcel',
             'delivery_provider' => 'required|in:DHL,STARTRACK,ZOOM2U,TGE',
-            'pickup_date_time' => 'required|date',
+            'pickup_date_time' => 'required|date|after:now',
 
             // Package Info
             'package_description' => 'required|string|min:5',

@@ -26,8 +26,10 @@ class DeliveryRequestController extends Controller
         return new DeliveryRequestResource($deliveryRequest);
     }
 
-    public function cancel(DeliveryRequest $request)
+    public function cancel($ref)
     {
+        $request = DeliveryRequest::where('ref_id', $ref)->firstOrFail();
+
         if (in_array($request->status, ['processed', 'shipped'])) {
             return response()->json(['message' => 'Request cannot be cancelled.'], 422);
         }

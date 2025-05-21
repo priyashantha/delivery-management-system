@@ -16,6 +16,7 @@ class DeliveryRequestResource extends JsonResource
     {
         return [
             'id' => $this->id,
+            'ref_id' => $this->ref_id,
             'status' => $this->status,
 
             // Pickup Info
