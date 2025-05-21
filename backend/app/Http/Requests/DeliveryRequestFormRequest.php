@@ -4,6 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
+use Illuminate\Support\Facades\Http;
 
 class DeliveryRequestFormRequest extends FormRequest
 {
@@ -46,6 +47,16 @@ class DeliveryRequestFormRequest extends FormRequest
             'length' => 'required|integer|min:0',
             'width' => 'required|integer|min:0',
             'height' => 'required|integer|min:0',
+            'recaptcha_token' => ['required', function ($attribute, $value, $fail) {
+                $response = Http::asForm()->post('https://www.google.com/recaptcha/api/siteverify', [
+                    'secret' => config('services.recaptcha.secret'),
+                    'response' => $value,
+                ]);
+
+                if (!data_get($response->json(), 'success')) {
+                    $fail('reCAPTCHA verification failed.');
+                }
+            }],
         ];
     }
 

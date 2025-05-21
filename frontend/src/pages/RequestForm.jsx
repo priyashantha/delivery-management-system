@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useLocation } from 'react-router-dom';
 import axios from 'axios';
+import ReCAPTCHA from 'react-google-recaptcha';
 
 export default function RequestForm() {
     const [formData, setFormData] = useState({
@@ -27,6 +28,7 @@ export default function RequestForm() {
     const [errors, setErrors] = useState({});
     const [success, setSuccess] = useState(null);
     const [loading, setLoading] = useState(false);
+    const [recaptchaToken, setRecaptchaToken] = useState('');
 
     const location = useLocation();
     useEffect(() => {
@@ -71,7 +73,10 @@ export default function RequestForm() {
         setLoading(true);
 
         try {
-            const response = await axios.post('/api/requests', formData);
+            const response = await axios.post('/api/requests', {
+                ...formData,
+                recaptcha_token: recaptchaToken,
+            });
             console.log('response.data', response.data)
             setSuccess('Your request has been submitted successfully.');
         } catch (error) {
@@ -85,6 +90,8 @@ export default function RequestForm() {
             setLoading(false);
         }
     };
+
+    const siteKey = import.meta.env.VITE_RECAPTCHA_SITE_KEY; // Vite
 
     return (
         <section className="p-2">
@@ -239,6 +246,19 @@ export default function RequestForm() {
                                     {errors.height && <p className="text-red-600 text-sm">{errors.height[0]}</p>}
                                 </div>
                             </div>
+                        </fieldset>
+
+                        <fieldset className="border p-4 rounded border-gray-300">
+                            <ReCAPTCHA
+                                sitekey={siteKey}
+                                onChange={(token) => setRecaptchaToken(token)}
+                            />
+                            {errors.recaptcha_token && (
+                                <p className="text-red-600 text-sm mt-1">
+                                    {errors.recaptcha_token[0]}
+                                </p>
+                            )}
+
                         </fieldset>
 
                         <button
