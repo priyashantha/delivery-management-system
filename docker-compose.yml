@@ -7,7 +7,7 @@ services:
       - "3307:3306"
     environment:
       MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: todo
+      MYSQL_DATABASE: delivery_system
     volumes:
       - dbdata:/var/lib/mysql
 
@@ -24,9 +24,20 @@ services:
       DB_CONNECTION: mysql
       DB_HOST: mysql
       DB_PORT: 3306
-      DB_DATABASE: todo
+      DB_DATABASE: delivery_system
       DB_USERNAME: root
       DB_PASSWORD: root
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile.dev
+    ports:
+      - "5173:5173"
+    volumes:
+      - ./frontend:/app
+    depends_on:
+      - backend
 
 volumes:
   dbdata:
