@@ -52,10 +52,3 @@ docker-compose exec backend php artisan migrate
 
 - Frontend: [http://localhost:5173](http://localhost:5173)
 - API: [http://localhost:8000/api/tasks](http://localhost:8000/api/tasks)
-
----
-
-## Subproject Docs
-
-- [`backend/README.md`](./backend/README.md)
-- [`frontend/README.md`](./frontend/README.md)
