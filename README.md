@@ -1,4 +1,4 @@
-# Task Planner – Full Stack Deliver Management System
+# Full Stack Deliver Management System
 
 A full-stack Dockerized Delivery Management app built with Laravel, MySQL, React, and Tailwind CSS.
 
@@ -54,4 +54,4 @@ docker-compose exec backend php artisan migrate
 ## Open the App
 
 - Frontend: [http://localhost:5173](http://localhost:5173)
-- API: [http://localhost:8000/api/tasks](http://localhost:8000/api/tasks)
+- API: [http://localhost:8000/api/requests](http://localhost:8000/api/requests)
